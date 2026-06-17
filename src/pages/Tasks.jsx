@@ -1,11 +1,17 @@
 // src/pages/Tasks.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom"; //Import the context hook
 import { initialTasks } from "../data/mockTasks";
 import TaskCard from "../components/TaskCard";
 
 function Tasks() {
-  const [tasks, setTasks] = useState(initialTasks);
+  // Dynamic Initialization Function
+  // Instead of passing a raw array, we check localStorage first. If it's empty, we load initialTasks.
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("taskforge_tasks");
+    return savedTasks ? JSON.parse(savedTasks) : initialTasks;
+  });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Grab the real-time search text from the layout wrapper context
@@ -21,6 +27,12 @@ function Tasks() {
     dueDate: "",
   };
   const [formData, setFormData] = useState(emptyFormState);
+
+  // The LocalStorage Sync Sync Hook
+  // This runs automatically every single time the 'tasks' array changes!
+  useEffect(() => {
+    localStorage.setItem("taskforge_tasks", JSON.stringify(tasks));
+  }, [tasks]); // The dependency array tells React to only run this when 'tasks' updates
 
   // Handle Deletion
   const handleDeleteTask = (taskId) => { 
