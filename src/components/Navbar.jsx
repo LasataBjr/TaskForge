@@ -2,8 +2,8 @@ import { FiSearch, FiBell } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 
 
-// Accept search props from MainLayout
-function Navbar({ searchQuery, setSearchQuery }) {
+// Accept search props, profile from MainLayout
+function Navbar({ searchQuery, setSearchQuery, profile }) {
   const location = useLocation();
 
   const pageTitles = {
@@ -21,12 +21,12 @@ function Navbar({ searchQuery, setSearchQuery }) {
         </h2>
 
         <p className="text-sm text-slate-500">
-          Welcome back 
+          Welcome back, {profile.name}!
         </p>
       </div>
 
       <div className="flex items-center gap-4">
-        {/* Search */}
+        {/* Search Bar */}
         <div className="hidden md:flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
           <FiSearch className="text-slate-400" />
           <input
@@ -35,7 +35,7 @@ function Navbar({ searchQuery, setSearchQuery }) {
             // Bind value to the layout's state
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent outline-none text-sm"
+            className="bg-transparent outline-none text-sm w-48 focus:w-64 transition-all duration-200"
           />
         </div>
 
@@ -47,16 +47,16 @@ function Navbar({ searchQuery, setSearchQuery }) {
         {/* Profile */}
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-600 font-semibold text-white">
-            A
+            {profile.name.charAt(0)} {/* Dynamic Avatar Initial Letter */}
           </div>
 
           <div className="hidden md:block">
             <p className="text-sm font-medium text-slate-900">
-              ASA
+              {profile.name}
             </p>
 
             <p className="text-xs text-slate-500">
-              Developer
+              {profile.role}
             </p>
           </div>
         </div>
