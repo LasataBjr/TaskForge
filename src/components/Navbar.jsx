@@ -1,7 +1,9 @@
 import { FiSearch, FiBell } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 
-function Navbar() {
+
+// Accept search props from MainLayout
+function Navbar({ searchQuery, setSearchQuery }) {
   const location = useLocation();
 
   const pageTitles = {
@@ -30,6 +32,9 @@ function Navbar() {
           <input
             type="text"
             placeholder="Search..."
+            // Bind value to the layout's state
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="bg-transparent outline-none text-sm"
           />
         </div>
