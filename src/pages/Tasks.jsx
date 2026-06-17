@@ -78,6 +78,20 @@ function Tasks() {
     );
   });
 
+  //
+  const handleUpdateStatus = (taskId, newStatus) => {
+  const updatedTasks = tasks.map((task) => {
+    if (task.id === taskId) {
+      // Create a brand new object with the updated status field
+      return { ...task, status: newStatus };
+    }
+    // Leave all other tasks completely unchanged
+    return task;
+  });
+  
+  setTasks(updatedTasks);
+};
+
   return (
     <div className="space-y-6 w-full block relative">
       {/* Page Header */}
@@ -106,7 +120,7 @@ function Tasks() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
           {filteredTasks.map((task) => (
-            <TaskCard key={task.id} task={task} onDelete={handleDeleteTask} />
+            <TaskCard key={task.id} task={task} onDelete={handleDeleteTask}  onUpdateStatus={handleUpdateStatus} />
           ))}
         </div>
       )}

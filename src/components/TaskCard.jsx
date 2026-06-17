@@ -1,7 +1,7 @@
 // src/components/TaskCard.jsx
 import { FiTrash2 } from "react-icons/fi";
 
-function TaskCard({ task, onDelete }) {
+function TaskCard({ task, onDelete, onUpdateStatus }) {
   const priorityColors = {
     Critical: "bg-red-100 text-red-800",
     High: "bg-orange-100 text-orange-800",
@@ -26,9 +26,15 @@ function TaskCard({ task, onDelete }) {
             <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${priorityColors[task.priority]}`}>
               {task.priority}
             </span>
-            <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${statusColors[task.status]}`}>
-              {task.status}
-            </span>
+            <select
+              value={task.status}
+              onChange={(e) => onUpdateStatus(task.id, e.target.value)} // 👈 3. Fire the parent state action
+              className={`text-xs px-2 py-0.5 rounded-full font-medium border-0 cursor-pointer outline-hidden focus:ring-2 focus:ring-blue-500/20 ${statusColors[task.status]}`}
+            >
+              <option value="Pending" className="bg-white text-slate-700">Pending</option>
+              <option value="In Progress" className="bg-white text-blue-700">In Progress</option>
+              <option value="Completed" className="bg-white text-emerald-700">Completed</option>
+            </select>
           </div>
         </div>
 
